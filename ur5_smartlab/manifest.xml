@@ -1,0 +1,14 @@
+<package>
+  <description brief="ur5_smartlab">
+
+     ur5_smartlab
+
+  </description>
+  <author>root</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ur5_smartlab</url>
+
+</package>
+
+
