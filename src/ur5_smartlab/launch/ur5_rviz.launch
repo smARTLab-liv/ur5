@@ -1,0 +1,6 @@
+<launch>
+    <arg name="gui" default="true"/>
+    <param name="robot_description"
+           command="$(find xacro)/xacro --inorder '$(find ur5_smartlab)/urdf/ur5_smartlab_gelsight.xacro'"/>
+    <node name="rviz" pkg="rviz" type="rviz" if="$(arg gui)"/>
+</launch>

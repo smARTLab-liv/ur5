@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!--<xacro:macro name="ur5_smartlab">-->
+        <link name="world"/>
+
+        <material name="wood">
+            <color rgba="0.6 0.4 0.2 1"/>
+        </material>
+
+        <material name="white">
+            <color rgba="1 1 1 1"/>
+        </material>
+
+        <link name="wall">
+            <visual>
+                <origin xyz="0 0 2.0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="4 0.01 4"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 2.0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="4 0.01 4"/>
+                </geometry>
+            </collision>
+        </link>
+
+
+        <link name="table">
+            <visual>
+                <!--<origin xyz="0 0 0" rpy="0 0 45" />-->
+                <material name="wood"/>
+                <geometry>
+                    <box size="1 1 0.01"/>
+                </geometry>
+            </visual>
+            <collision>
+                <!--<origin xyz="0 0 0" rpy="0 0 45"/>-->
+                <geometry>
+                    <box size="1 1 0.01"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="world_to_wall" type="fixed">
+            <parent link="world"/>
+            <child link="wall"/>
+            <origin xyz="0.0 -1.0 0.0" rpy="0.0 0.0 0.0"/>
+        </joint>
+
+        <joint name="world_to_table" type="fixed">
+            <parent link="world"/>
+            <child link="table"/>
+            <origin xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0"/>
+        </joint>
+    <!--</xacro:macro>-->
+</robot>

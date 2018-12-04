@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: ur5_smartlab
+    relative_path: urdf/ur5_smartlab.xacro
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/ur5.srdf
+  CONFIG:
+    author_name: Daniel Fernandes Gomes
+    author_email: danfergo@gmail.com
+    generated_timestamp: 1543864918

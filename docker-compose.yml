@@ -1,0 +1,40 @@
+version: '3.3'
+# before starting: xhost +local:docker
+
+services:
+    core:
+        image: ros:kinetic-ros-core
+        tty: true
+        command: roscore
+
+    ws1:
+        build:
+            context: .
+            dockerfile: docker/workspace.Dockerfile
+        tty: true
+#        devices:
+#        - /dev/video0:/dev/video0
+        environment:
+        - ROS_MASTER_URI=http://core:11311/
+        - DISPLAY=$DISPLAY
+        ports:
+        - 50001:50001
+        volumes:
+        - /tmp/.X11-unix:/tmp/.X11-unix:rw
+        - ./ws1/:/catkin_ws
+
+
+    gazebo:
+        build:
+            context: .
+            dockerfile: docker/gazebo.Dockerfile
+        tty: true
+        environment:
+        - ROS_MASTER_URI=http://core:11311/
+        - DISPLAY=$DISPLAY
+        volumes:
+        - /tmp/.X11-unix:/tmp/.X11-unix:rw
+        - ./gazebo/:/catkin_ws
+
+
+
