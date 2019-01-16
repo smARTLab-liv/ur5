@@ -4,6 +4,22 @@ from std_msgs.msg import String
 import rospy
 import pathlib
 
+MAX_DIFF = (640 * 480 * 3 * 255)
+
+
+def absolute_square_diff(img1, img2):
+    return cv2.absdiff(img1, img2)
+    # abs = np.absolute(diff)
+    # return np.square(diff)
+
+
+def absolute_square_diff_sum(img):
+    return np.sum(img)
+
+
+def diff_to_percent(diff):
+    return diff / MAX_DIFF
+
 
 class CameraController:
 
@@ -16,7 +32,8 @@ class CameraController:
         # cv2.namedWindow('frame')
         if self.folder:
             pathlib.Path(self.folder).mkdir(parents=True)
-        self.capture_and_display()
+        self.background = self.capture_and_display()
+
 
     def capture_img(self):
         frame = None
@@ -25,12 +42,38 @@ class CameraController:
             key = cv2.waitKey(1)
         return frame
 
-    #
     def capture_and_display(self):
         frame = self.capture_img()
         cv2.imshow('frame', frame)
         key = cv2.waitKey(10)
         return frame
+
+
+    def detect_touch(self):
+        frame = self.capture_img(self)
+        diff_frame = absolute_square_diff(self.background, frame)
+        diff = diff_to_percent(absolute_square_diff_sum(diff_frame))
+
+        touching = diff > 0.015
+
+        if (touching):
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            bottomLeftCornerOfText = (100, 200)
+            fontScale = 1
+            fontColor = (0, 0, 255)
+            lineType = 2
+
+            cv2.putText(frame, 'Touching!',
+                        bottomLeftCornerOfText,
+                        font,
+                        fontScale,
+                        fontColor,
+                        lineType)
+            print('touching')
+        return touching
+
+
+
 
     def capture_display_and_save(self, i):
         frame = self.capture_and_display()

@@ -47,11 +47,11 @@ def capture():
     # cap.set(cv2.CV_CAP_PROP_BUFFERSIZE, 3)
 
     cv2.namedWindow('frame')
-    cv2.createTrackbar('T', 'frame', 0, 1000, nothing)
-    cv2.setTrackbarPos('T', 'frame', 150)
+    cv2.createTrackbar('T', 'frame', 0, 100, nothing)
+    cv2.setTrackbarPos('T', 'frame', 15)
 
-    cv2.createTrackbar('PT', 'frame', 0, 255, nothing)
-    cv2.setTrackbarPos('PT', 'frame', 20)
+    # cv2.createTrackbar('PT', 'frame', 0, 255, nothing)
+    # cv2.setTrackbarPos('PT', 'frame', 20)
 
     diffs = []
     intensities = []
@@ -75,18 +75,18 @@ def capture():
             if background is None:
                 background = frame
 
-            px_threshold = cv2.getTrackbarPos('PT', 'frame')
+            # px_threshold = cv2.getTrackbarPos('PT', 'frame')
 
             diff_frame = absolute_square_diff(background, frame)
-            binary_image = touch_area(background, frame, px_threshold)
+            # binary_image = touch_area(background, frame, px_threshold)
             diff = diff_to_percent(absolute_square_diff_sum(diff_frame))
 
-            area = np.count_nonzero(binary_image)
-            intensity = 0 if area == 0 else (area / (640 * 480))
+            # area = np.count_nonzero(binary_image)
+            # intensity = 0 if area == 0 else (area / (640 * 480))
             # print(intensity)
 
             diffs.append(diff)
-            intensities.append(intensity)
+            # intensities.append(intensity)
             diffs = diffs[-10:]
             intensities = intensities[-10:]
 
@@ -96,14 +96,15 @@ def capture():
             plt.plot(diffs, label='Diffs')
             plt.legend()
 
-            plt.ylim(0, 1)
+            plt.ylim(0, 0.4)
             plt.ylabel('some numbers')
             plt.pause(0.01)
             # plt.show()
 
-            threshold = cv2.getTrackbarPos('T', 'frame') / 1000
+            threshold = cv2.getTrackbarPos('T', 'frame') / 1000.0
 
-            touching = intensity > threshold
+            touching = diff > threshold
+
             if (touching):
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 bottomLeftCornerOfText = (100, 200)
@@ -123,7 +124,7 @@ def capture():
             #
             # cv2.imshow('diff', diff_frame)
             # cv2.imshow('background', background)
-            cv2.imshow('binary', binary_image)
+            # cv2.imshow('binary', binary_image)
 
             key = cv2.waitKey(1) & 0xFF
 
@@ -136,8 +137,8 @@ def capture():
             # if not started_touching and not touching:
             #     background = frame
             #
-            if intensity < 0.15:
-                background = ((0.9 * background) + (0.1 * frame)).astype(np.uint8)
+            # if intensity < 0.15:
+            #     background = ((0.9 * background) + (0.1 * frame)).astype(np.uint8)
 
             were_touching = touching
         # ret, frame = cap.read()

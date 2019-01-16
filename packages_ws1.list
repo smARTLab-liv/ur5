@@ -8,3 +8,5 @@ ros-kinetic-ros-control
 ros-kinetic-industrial-core
 ros-kinetic-moveit
 
+ros-kinetic-soem
+ros-kinetic-socketcan-interface
