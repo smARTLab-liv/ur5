@@ -1,6 +1,6 @@
-**/src/CMakeLists.txt
+.**/src/CMakeLists.txt
 .idea
 build
 devel
 ros_packages
-
+.pyc
