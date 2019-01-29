@@ -3,5 +3,4 @@
 build
 devel
 ros_packages
-.pyc
-**/*.pyc
+*.pyc
