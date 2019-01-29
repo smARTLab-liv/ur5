@@ -191,7 +191,7 @@ class UR5Controller:
                     self.stop()
                     raise
 
-    def pick_and_place(self, pose_a, pose_b, m, plan_only=True, block_size=0.11, n_rows=3, n_reps=4):
+    def pick_and_place(self, pose_a, pose_b, m, plan_only=True, block_size=0.11, n_rows=3, n_reps=2):
         pose_a = P(*pose_a)
         pose_b = P(*pose_b)
         pose_m = P(*m)
